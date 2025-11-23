@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="chat-box">
+
+    <div class="container">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+        <div class="profile">
+            <img src="avater/luffy.jpg" alt="profile" />
+            <span class="app-name">CITHI</span>
+        </div>
+
+        <div class="search">
+            <input type="text" placeholder="search" />
+        </div>
+
+        <div class="user-list">
+
+            <div class="user">
+                <img src="avater/miku01.jpg" />
+                <span>Hatsune Miku</span>
+            </div>
+
+            <div class="user">
+                <img src="avater/luffy02.jpg" />
+                <span>Monkey D Luffy</span>
+            </div>
+
+            <div class="user">
+                <img src="avater/teto.jpg" />
+                <span>Kasane Teto</span>
+            </div>
+
+            <div class="user">
+                <img src="avater/ckk.JPG" />
+                <span>Chandan</span>
+            </div>
+
+        </div>
+        
+    </div>
+
+    <!-- Chat Area -->
+    <div class="chatbox">
+
+    <div class="topbar">
+        <div class="user-info">
+            <img id="top-avatar" src="avater/miku01.jpg" height="30px">
+            <span id="chat-name">Hatsune Miku</span>
+        </div>
+
+        <div class="icons">
+            <!-- PHONE ICON -->
+            <i class="icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                    <path d="M9.158 5.712L8.756 4.806C8.492 4.214 8.361 3.918 8.164 3.691C7.917 3.407 7.595 3.198 7.236 3.088C6.949 3 6.624 3 5.976 3C5.028 3 4.554 3 4.156 3.182C3.687 3.397 3.263 3.863 3.095 4.351C2.952 4.764 2.993 5.189 3.075 6.04C3.948 15.09 8.910 20.052 17.960 20.925C18.811 21.007 19.236 21.048 19.649 20.905C20.137 20.737 20.603 20.313 20.818 19.844C21 19.446 21 18.972 21 18.024C21 17.376 21 17.051 20.912 16.764C20.802 16.404 20.593 16.083 20.309 15.836C20.082 15.639 19.786 15.508 19.194 15.244L18.288 14.842C17.646 14.557 17.326 14.414 17 14.383C16.688 14.353 16.373 14.397 16.081 14.511C15.776 14.630 15.506 14.854 14.967 15.304C14.430 15.751 14.162 15.975 13.834 16.095C13.543 16.201 13.159 16.240 12.852 16.195C12.507 16.144 12.242 16.003 11.713 15.720C10.067 14.841 9.160 13.933 8.280 12.287C7.997 11.758 7.856 11.493 7.805 11.148C7.760 10.841 7.799 10.457 7.905 10.166C8.025 9.838 8.249 9.570 8.696 9.033C9.146 8.494 9.370 8.224 9.489 7.919C9.603 7.627 9.647 7.312 9.617 7.000C9.586 6.675 9.443 6.354 9.158 5.712Z" stroke="white" stroke-width="1.5"/>
+                </svg>
+            </i>
+
+            <!-- VIDEO ICON -->
+            <i class="icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                    <path d="M2 11C2 7.7 2 6.05 3.025 5.025C4.05 4 5.7 4 9 4H10C13.3 4 14.95 4 15.975 5.025C17 6.05 17 7.7 17 11V13C17 16.3 17 17.95 15.975 18.975C14.95 20 13.3 20 10 20H9C5.7 20 4.05 20 3.025 18.975C2 17.95 2 16.3 2 13V11Z" stroke="white" stroke-width="1.5"/>
+                    <path d="M17 8.905L17.126 8.802C19.242 7.056 20.300 6.183 21.150 6.605C22 7.026 22 8.424 22 11.218V12.782C22 15.576 22 16.974 21.150 17.395C20.300 17.817 19.242 16.944 17.126 15.198L17 15.094" stroke="white" stroke-width="1.5"/>
+                </svg>
+            </i>
+
+            <!-- MENU ICON -->
+            <i class="icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="5" r="1.5" fill="white"/>
+                    <circle cx="12" cy="12" r="1.5" fill="white"/>
+                    <circle cx="12" cy="19" r="1.5" fill="white"/>
+                </svg>
+            </i>
+        </div>
+    </div>
+
+    <div class="messages" id="messages"></div>
+
+    <div class="input-area">
+        <input id="msgInput" type="text" placeholder="Write a message…" />
+        <button id="sendBtn">➤</button>
+    </div>
+</div>
+
+        
+    </div>
+    <script>
+const users = document.querySelectorAll(".user");
+const chatName = document.getElementById("chat-name");
+const topAvatar = document.getElementById("top-avatar");
+const messages = document.getElementById("messages");
+const msgInput = document.getElementById("msgInput");
+const sendBtn = document.getElementById("sendBtn");
+
+// Fake chat history per user
+const chatDB = {
+    "Hatsune Miku": [
+        { side: "left",  text: "hi..." },
+        { side: "right", text: "hello, how are you?" },
+        { side: "left",  text: "fine. How was your day?" },
+        { side: "right", text: "great" }
+    ],
+    "Monkey D Luffy": [
+        { side: "left", text: "I'm hungry!" }
+    ],
+    "Kasane Teto": [
+        { side: "right", text: "hello Teto!" }
+    ],
+    "Chandan": [
+        { side: "left", text: "Chandan online?" }
+    ]
+};
+
+// Load chat
+function loadChat(user, avatar) {
+    chatName.textContent = user;
+    topAvatar.src = avatar;
+
+    messages.innerHTML = "";
+
+    chatDB[user].forEach(msg => {
+        const div = document.createElement("div");
+        div.className = `msg ${msg.side}`;
+        div.textContent = msg.text;
+        messages.appendChild(div);
+    });
+
+    messages.scrollTop = messages.scrollHeight;
+}
+
+// User click event
+users.forEach(u => {
+    u.addEventListener("click", () => {
+        const name = u.querySelector("span").textContent;
+        const avatar = u.querySelector("img").src;
+        loadChat(name, avatar);
+    });
+});
+
+// Send message
+sendBtn.addEventListener("click", () => {
+    const text = msgInput.value.trim();
+    if (!text) return;
+
+    const msg = document.createElement("div");
+    msg.className = "msg right";
+    msg.textContent = text;
+    messages.appendChild(msg);
+
+    chatDB[chatName.textContent].push({ side: "right", text });
+
+    msgInput.value = "";
+    messages.scrollTop = messages.scrollHeight;
+});
+
+// Send with Enter
+msgInput.addEventListener("keydown", e => {
+    if (e.key === "Enter") sendBtn.click();
+});
+</script>
+
+    
+</body>
+</html>
